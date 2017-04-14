@@ -1,9 +1,14 @@
 var express = require('express')
 var router = express.Router()
+var knex = require('../db/connection')
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource')
+//home page - show all contacts
+router.get('/', (req, res, next) => {
+  knex.('contacts')
+  .orderBy('last')
+  .then(contacts => {
+    res.render('/index', {contacts})
+  })
 })
 
 module.exports = router
