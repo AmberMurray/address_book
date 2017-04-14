@@ -3,7 +3,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable('contacts', table => {
     table.increments()
-    table.integer('address_id').notNullable()
+     table.integer('address_id').notNullable().references('id').inTable('addresses');
     table.string('first').notNullable().defaultTo('')
     table.string('last').notNullable().defaultTo('')
     table.string('phone').notNullable().defaultTo(0)

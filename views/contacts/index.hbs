@@ -1,11 +1,11 @@
 <!-- CONTACTS PAGE -->
 
-<div class="container">
+<div class="container-fluid">
   <h1>My Friends / Frenemies / Enemies</h1>
   <hr>
   {{#each contacts}}
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2 col-md-offset-1">
       <img src="{{this.image}}"
       class="contact-img">
     </div>
@@ -13,7 +13,10 @@
       <h2>{{this.first}} {{this.last}}</h2>
       <p>phone: {{this.phone}}</p>
       <p>email: {{this.email}}</p>
-      <p>
+      <h3>Address</h3>
+      <p>street: {{this.line_1}} {{this.line_2}}</p>
+      <p>city: {{this.city}} state: {{this.state}}<p>
+      <p>zip: {{this.zip}}</p>
         <form action="" method="">
           <input
           type="submit"

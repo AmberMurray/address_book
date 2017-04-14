@@ -6,9 +6,9 @@ a {
   color: #00B7FF;
 }
 
-img.contact-image {
-  display: block;
-  max-height: auto;
+img {
+  display: inline-block;
   margin: 2rem auto;
-  width: 50%;
+  width: 200px;
+  height: 200px;
 }

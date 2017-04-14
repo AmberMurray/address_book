@@ -18,7 +18,7 @@ exports.seed = function(knex) {
         first: 'Violet',
         last:  'Crawley',
         phone: '333-542-1217',
-        email: 'lgrantham@email.com',
+        email: 'vcrwaley@email.com',
         image: 'http://images6.fanpop.com/image/polls/1263000/1263632_1376371953914_full.jpg'
       },
       {
@@ -34,7 +34,7 @@ exports.seed = function(knex) {
         first: 'Isobel',
         last:  'Crawley',
         phone: '777-890-1216',
-        email: 'mcrawley@email.com',
+        email: 'icrawley@email.com',
         image: 'https://s-media-cache-ak0.pinimg.com/originals/12/65/f4/1265f4d99de2ecf93e80bc88a3885051.jpg'
       },
       {
