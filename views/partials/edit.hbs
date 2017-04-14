@@ -1,0 +1,80 @@
+<!-- EDIT OR ADD FORM -->
+
+<div class="container col-md 8">
+  <h1>Add Your Deets</h1>
+  <form method="POST" action="/contacts/{{#if contact.id }}{{ contact.id }}?_method=PUT{{/if}}" class="well">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="first_name">First Name</label>
+          <input type="text" name="first_name" class="form-control" id="first_name" value="{{ contact.first }}">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="last_name">Last Name</label>
+          <input type="text" name="last_name" class="form-control" id="last_name" value="{{ contact.last }}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" name="phone" class="form-control" id="phone" value="{{ contact.phone }}">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" id="email" value="{{ contact.email }}">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="image">Your Pic URL</label>
+          <input type="text" name="image" class="form-control" id="image" value="{{ contact.image }}">
+        </div>
+      </div>
+    </div>
+    <h2>Address</h2>
+    <hr>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="line_1">House / Apt / Trailer # </label>
+          <input type="text" name="line_1" value="{{ address.line_1 }}" class="form-control" id="line_1">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="line_2">Street</label>
+          <input type="text" name="line_2" value="{{ address.line_2 }}" class="form-control" id="line_2">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" name="city" class="form-control" id="city" value="{{ address.city }}">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" name="state" class="form-control" id="state" value="{{ address.state }}">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="zip">Zip</label>
+          <input type="text" name="zip" class="form-control" id="zip" min="5" value="{{ address.zip }}" placeholder="1 2 3 4 5 ">
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
