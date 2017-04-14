@@ -4,10 +4,10 @@ var knex = require('../db/connection')
 
 //home page - show all contacts
 router.get('/', (req, res, next) => {
-  knex.('contacts')
+  knex('contacts')
   .orderBy('last')
   .then(contacts => {
-    res.render('/index', {contacts})
+    res.render('/contacts/index', {contacts})
   })
 })
 

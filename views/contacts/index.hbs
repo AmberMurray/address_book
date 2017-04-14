@@ -4,19 +4,23 @@
   <h1>My Friends / Frenemies / Enemies</h1>
   <hr>
   {{#each contacts}}
-  <br>
   <div class="row">
-    <div class="col-sm-5"><img class="img-size" src="{{image}}"></div>
-    <div class="col-sm-5">
-      <h3>{{first}} {{last}}</h3>
-      <<h3>{{review_description}}</h3>
-      <p>Rating : {{rating}}</p>
-      <a href="/snacks/{{this.id}}/edit">
-        <input type="button" name="edit" value="EDIT">
-      </a>
-      <form class="delete" action="/snacks/{{this.id}}?_method=DELETE" method="POST">
-        <input type="submit" name="delete" value="DELETE">
-      </form>
+    <div class="col-md-3">
+      <img src="{{this.image}}"
+      class="contact-img">
+    </div>
+    <div class="col-md-7">
+      <h2>{{this.first}} {{this.last}}</h2>
+      <p>phone: {{this.phone}}</p>
+      <p>email: {{this.email}}</p>
+      <p>
+        <form action="" method="">
+          <input
+          type="submit"
+          class="btn btn-sm btn-danger"
+          name="delete" value="GOODBYE">
+        </form>
+      </p>
     </div>
   </div>
   {{/each}}
