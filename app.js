@@ -23,6 +23,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'))
+app.use(methodOverride('_method'))
 
 app.use('/', index)
 app.use('/contacts', contacts)

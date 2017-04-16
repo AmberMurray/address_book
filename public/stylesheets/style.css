@@ -12,3 +12,7 @@ img {
   width: 200px;
   height: 200px;
 }
+
+.home-button {
+  display: inline-block;
+}
