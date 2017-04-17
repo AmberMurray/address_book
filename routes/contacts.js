@@ -3,13 +3,29 @@ var router = express.Router()
 var knex = require('../db/connection')
 
 //HOME PAGE - SHOW ALL CONTACTS
-router.get('/', (req, res, next) => {
-  knex.from('contacts')
-  .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
-  .select('*', 'contacts.id as contact_id','addresses.id as addressID')
-  .then( contacts => {
+// router.get('/', (req, res, next) => {
+//   knex('contacts')
+//   .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
+//   .select('*', 'contacts.id as contact_id','addresses.id as addressID')
+//   .orderBy('last')
+//   .then(contacts => {
+//     console.log(contacts);
+//     res.render('contacts/index', {contacts})
+//   })
+// })
+
+router.get('/', function(req, res, next) {
+  console.log('IN ROUTER.GET / ');
+  knex('contacts')
+    .select('contacts.id', 'address_id', 'first', 'last', 'phone', 'email','image', 'line_1', 'line_2', 'city', 'state', 'zip')
+    .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
+    .orderBy('last')
+  .then(contacts => {
     console.log(contacts);
-    res.render('contacts/index', {contacts})
+     res.render('contacts/index', { contacts })
+  })
+  .catch(err => {
+    next(err)
   })
 })
 
@@ -18,19 +34,6 @@ router.get('/new', (req, res, next) => {
   res.render('contacts/new')
 })
 
-// //SHOW CONTACT TO EDIT
-// router.get('/:id', (req, res, next) => {
-//   let id = req.params.id
-//   console.log(id);
-//   knex('contacts')
-//   .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
-//   .where({ id })
-//   .first()
-//   .then(contact => {
-//     console.log(contact);
-//     res.render('contacts/new', contact)
-//   })
-// })
 
 //ADD A NEW ADDRESS & THEN A NEW CONTACT
 router.post('/', (req, res, next) => {
@@ -60,6 +63,20 @@ router.post('/', (req, res, next) => {
   })
 })
 
+// ADD THE CONTACT INFO TO EDIT TO THE FORM
+// router.get('/edit/:id', (req, res, next) => {
+//   let id = req.params.id
+//   console.log(id);
+//   knex('contacts')
+//   .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
+//   .where({ id })
+//   .first()
+//   .then(contact => {
+//     console.log(contact);
+//     res.render('contacts/new', contact)
+//   })
+// })
+
 
 
 //UPDATE AN EXISTING CONTACT
@@ -71,38 +88,36 @@ router.post('/', (req, res, next) => {
 //
 // })
 
-// DELETE A CONTACT (AND MAYBE THE ASSOCIATED ADDRESS)
+// DELETE A CONTACT (AND MAYBE THE ASSOCIATED ADDRESS
 router.delete('/:id',(req,res,next) => {
-  let id = req.params.id
-
-  console.log('*****************',id)
-
-  knex('contacts')
-  // .select('address_id')
-  .where({ id })
-  .returning('*')
-  .then(result => {
-
-    console.log('****************', result)
-
+    let id = req.params.id
     knex('contacts')
-    .count()
-    .where('address_id', result[0])
-    .then(count => {
-
-      console.log('*****************',count)
-
-      if (count[0] === 1) {
-        knex('addresses')
-        .del()
-        .where('id', addressID)
-        .then(() => {
-          res.redirect('/contacts')
+    .where('id', id)
+    .select('*')
+    .first()
+    .then(result => {
+      addressId = result.address_id
+      knex('contacts')
+      .del()
+      .where('id', id)
+      .then( () => {
+        knex('contacts')
+        .where('address_id', addressId)
+        .count()
+        .first()
+        .then((result) => {
+          var count = result.count
+          if (count == 0) {
+            knex('addresses')
+            .del()
+            .where('id', addressId)
+            .then( () => {
+            })
+          }
         })
-      } //ELSE DELETE CONTACT BUT NOT ADDRESS
-      res.redirect('/contacts')
+      })
     })
+    res.redirect('/contacts')
   })
-})
 
 module.exports = router

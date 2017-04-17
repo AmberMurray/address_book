@@ -24,11 +24,12 @@
           class="btn btn-sm btn-danger"
           name="delete" value="GOODBYE">
         </form>
-        <form class="home-button" action="/contacts/{{ this.id }}" method="POST">
+        <form class="home-button" action="/contacts/edit/{{ this.id }}" method="GET">
           <input
           type="submit"
           class="btn btn-sm btn-info"
-          name="update" value="UPDATE">
+          name="update"
+          value="UPDATE">
         </form>
     </div>
   </div>
