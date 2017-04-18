@@ -57,17 +57,40 @@ router.get('/edit/:id', function(req, res, next) {
   .where('contacts.id', req.params.id)
   .first()
   .then( contact => {
-    console.log(contact);
     res.render('contacts/new', {contact})
   })
 })
 
-// UPDATE AN EXISTING CONTACT
-// router.put('/:id', (req, res, next) => {
-//   let id = req.params.id
-//   knex('contacts')
-//   .where({id})
-// })
+//UPDATE AN EXISTING CONTACT
+router.put('/:id', (req,res,next) => {
+  let address = {
+    line_1: req.body.line_1,
+    line_2: req.body.line_2,
+    city: req.body.city,
+    state: req.body.state,
+    zip: req.body.zip
+  }
+  let contact = {
+    first: req.body.first,
+    last: req.body.last,
+    phone: req.body.phone,
+    email: req.body.email,
+    image: req.body.image
+  }
+  var contact_id = req.params.id;
+  knex('contacts')
+  .update(contact)
+  .where('id', contact_id)
+  .returning('address_id')
+  .then(id  => {
+    knex('addresses')
+    .update(address)
+    .where('id', id[0])
+    .then(() => {
+      res.redirect('/contacts')
+    })
+  })
+});
 
 // DELETE A CONTACT (AND MAYBE THE ASSOCIATED ADDRESS
 router.delete('/:id',(req,res,next) => {
