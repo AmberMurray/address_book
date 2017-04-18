@@ -3,25 +3,12 @@ var router = express.Router()
 var knex = require('../db/connection')
 
 //HOME PAGE - SHOW ALL CONTACTS
-// router.get('/', (req, res, next) => {
-//   knex('contacts')
-//   .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
-//   .select('*', 'contacts.id as contact_id','addresses.id as addressID')
-//   .orderBy('last')
-//   .then(contacts => {
-//     console.log(contacts);
-//     res.render('contacts/index', {contacts})
-//   })
-// })
-
 router.get('/', function(req, res, next) {
-  console.log('IN ROUTER.GET / ');
   knex('contacts')
     .select('contacts.id', 'address_id', 'first', 'last', 'phone', 'email','image', 'line_1', 'line_2', 'city', 'state', 'zip')
     .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
     .orderBy('last')
   .then(contacts => {
-    console.log(contacts);
      res.render('contacts/index', { contacts })
   })
   .catch(err => {
@@ -33,7 +20,6 @@ router.get('/', function(req, res, next) {
 router.get('/new', (req, res, next) => {
   res.render('contacts/new')
 })
-
 
 //ADD A NEW ADDRESS & THEN A NEW CONTACT
 router.post('/', (req, res, next) => {
@@ -64,28 +50,23 @@ router.post('/', (req, res, next) => {
 })
 
 // ADD THE CONTACT INFO TO EDIT TO THE FORM
-// router.get('/edit/:id', (req, res, next) => {
-//   let id = req.params.id
-//   console.log(id);
-//   knex('contacts')
-//   .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
-//   .where({ id })
-//   .first()
-//   .then(contact => {
-//     console.log(contact);
-//     res.render('contacts/new', contact)
-//   })
-// })
+router.get('/edit/:id', function(req, res, next) {
+  knex.from('contacts')
+  .innerJoin('addresses', 'contacts.address_id', 'addresses.id')
+  .select('*', 'contacts.id as contact_id','addresses.id as addressID')
+  .where('contacts.id', req.params.id)
+  .first()
+  .then( contact => {
+    console.log(contact);
+    res.render('contacts/new', {contact})
+  })
+})
 
-
-
-//UPDATE AN EXISTING CONTACT
+// UPDATE AN EXISTING CONTACT
 // router.put('/:id', (req, res, next) => {
 //   let id = req.params.id
 //   knex('contacts')
 //   .where({id})
-//
-//
 // })
 
 // DELETE A CONTACT (AND MAYBE THE ASSOCIATED ADDRESS
